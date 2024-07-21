@@ -19,7 +19,7 @@ router.put('/updatedetails', fetchDetails, [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({ "error": errors.array(), "success": "false" });
+        return res.status(400).json({ "error": errors.array()[0].msg, "success": "false" });
     }
 
     // id of the user
@@ -89,7 +89,7 @@ router.put('/changepassword', fetchDetails, [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({ "error": errors.array(), "success": "false" });
+        return res.status(400).json({ "error": errors.array()[0].msg, "success": "false" });
     }
 
     // id of the user

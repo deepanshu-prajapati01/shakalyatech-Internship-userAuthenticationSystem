@@ -27,7 +27,7 @@ router.post("/createaccount", [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({ "error": errors.array(), "success": "false" });
+        return res.status(400).json({ "error": errors.array()[0].msg, "success": "false" });
     }
 
     // check whether the email address, phone number, username already exists.
@@ -76,6 +76,7 @@ router.post("/createaccount", [
         }
     } catch (error) {
         res.status(500).json({ "error": "Internal Server Error occurred!", "detailedError": error, "success": "true" })
+        console.log(error);
     }
 })
 
@@ -91,7 +92,7 @@ router.post('/login', [
     const errors = validationResult(req);
 
     if (!errors.isEmpty) {
-        return res.status(400).json({ "error": errors.array(), "success": "false" });
+        return res.status(400).json({ "error": errors.array()[0].msg, "success": "false" });
     }
 
     else {
