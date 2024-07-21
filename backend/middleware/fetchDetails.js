@@ -9,7 +9,7 @@ const fetchDetails = (req, res, next) => {
     const token = req.header("auth-token");
 
     if (!token) {
-        return res.status(401).send("Please authenticate the user to start using the app!")
+        return res.status(401).json({ "error": "Please authenticate the user to start using the app!", "success": "false" })
     }
 
     try {
@@ -18,7 +18,7 @@ const fetchDetails = (req, res, next) => {
         next();
 
     } catch (error) {
-        return res.status(401).send("Please authenticate the user using valid credentials!")
+        return res.status(401).json({ "error": "Please authenticate the user using valid credentials!", "success": "false" })
     }
 
 }

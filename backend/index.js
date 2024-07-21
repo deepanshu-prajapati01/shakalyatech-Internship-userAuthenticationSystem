@@ -14,6 +14,7 @@ app.use(express.json())
 // Available Routes
 app.use("/api/auth", require("./routes/CreateUser"))
 app.use("/api/edit", require("./routes/EditDetails"))
+app.use("/api/user", require("./routes/Dashboard"))
 
 app.get('/', (req, res) => {
     res.send('This app is working fine now!')

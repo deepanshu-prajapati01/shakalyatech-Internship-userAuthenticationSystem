@@ -27,7 +27,7 @@ router.post("/createaccount", [
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({ "error": errors.array() });
+        return res.status(400).json({ "error": errors.array(), "success": "false" });
     }
 
     // check whether the email address, phone number, username already exists.
@@ -48,7 +48,7 @@ router.post("/createaccount", [
         // to check if there any values 
         if (newData.length !== 0) {
             const duplicity = newData.toString()
-            return res.status(400).json({ error: `Sorry, the following => ` + duplicity + ` <= already linked to another account.` });
+            return res.status(400).json({ error: `Sorry, the following => ` + duplicity + ` <= already linked to another account.`, "success": "false" });
         }
         else {
             const salt = await bcrypt.genSalt(10);
@@ -72,10 +72,10 @@ router.post("/createaccount", [
 
             // giving auth token
             const authToken = jwt.sign(data, JWT_SECRET);
-            res.status(200).json({ authToken, data });
+            res.status(200).json({ authToken, "message": "User Created Successfully!", "success": "true" });
         }
     } catch (error) {
-        res.status(400).json({ "error": "Internal Server Error occurred!", "detail": error })
+        res.status(500).json({ "error": "Internal Server Error occurred!", "detailedError": error, "success": "true" })
     }
 })
 
@@ -91,19 +91,19 @@ router.post('/login', [
     const errors = validationResult(req);
 
     if (!errors.isEmpty) {
-        return res.status(400).json({ "error": errors.array() });
+        return res.status(400).json({ "error": errors.array(), "success": "false" });
     }
 
     else {
         try {
             let user = await User.findOne({ "Email": req.body.email });
             if (!user) {
-                return res.status(404).json({ "error": `No email found with the following email.\nEmail: ${req.body.email}` })
+                return res.status(404).json({ "error": `No email found with the following email.\nEmail: ${req.body.email}`, "success": "false" })
             }
             else {
                 const comparePassword = await bcrypt.compare(req.body.password, user.Password)
                 if (!comparePassword) {
-                    return res.status(401).json({ "error": "Invalid Credentials" })
+                    return res.status(401).json({ "error": "Invalid Credentials", "success": "false" })
                 }
 
                 // giving out the auth token for successful login
@@ -115,11 +115,11 @@ router.post('/login', [
 
                 // giving out the auth token
                 const authToken = jwt.sign(data, JWT_SECRET);
-                res.status(200).json({ authToken, data })
+                res.status(200).json({ authToken, "message": "Logged In Successfully!", "success": "true" })
 
             }
         } catch (error) {
-            res.status(400).json({ "error": "Internal Server Error occurred!" })
+            res.status(500).json({ "error": "Internal Server Error occurred!", "detailedError": error, "success": "false" })
         }
     }
 })
