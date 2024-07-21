@@ -1,0 +1,31 @@
+BOILER PLATE
+
+
+//signup 
+
+name, email, phone no, username, passsword, dob
+
+//sign in
+username, password,
+- forgetPassword
+
+//dashboard
+welcome name,
+name: name
+email : email,
+mobile : mobile
+
+// change password 
+set new password
+cinfirnm password
+-> button
+
+
+
+# ^Login and signup
+navbar -> Home , signup, sign in 
+
+# user signed in 
+dashboard, logout, chnage password, edit details
+
+EdIT details-> eveyrthing
