@@ -1,8 +1,8 @@
 # shakalyatech-Internship-userAuthenticationSystem : An internship offered by Shakalyatech which helped me to develop skills by creating this single page web application with the help of React Js.
 
-![sample Image](https://github.com/deepanshu-prajapati01/shakalyatech-Internship-userAuthenticationSystem/tree/master/images/1.png)
+![sample Image](https://github.com/deepanshu-prajapati01/shakalyatech-Internship-userAuthenticationSystem/blob/master/Images/1.png)
 
-![sample Image](https://github.com/deepanshu-prajapati01/shakalyatech-Internship-userAuthenticationSystem/tree/master/images/3.png)
+![sample Image](https://github.com/deepanshu-prajapati01/shakalyatech-Internship-userAuthenticationSystem/blob/master/Images/3.png)
 
 # Things i have learnt throughout the project:: 
 
