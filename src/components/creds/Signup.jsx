@@ -33,7 +33,7 @@ const Signup = (props) => {
         }
 
         else {
-            return props.showAlert("Unexpected error occurred", "danger")
+            return props.showAlert("Unexpected error occurred while creating user account", "danger")
         }
 
 
@@ -82,6 +82,8 @@ const Signup = (props) => {
                         <label htmlFor="mobilenumber" className="form-label">Mobile Number</label>
                         <input type="number" className="form-control" onChange={onChange} value={Credential.mobilenumber} name='mobilenumber' id="mobilenumber" />
                     </div>
+
+
 
                     <div className="col-12">
                         <button type="submit" className="btn btn-primary">Sign up</button>

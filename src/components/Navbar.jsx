@@ -5,13 +5,15 @@ import { Link, useLocation } from 'react-router-dom'
 const Navbar = props => {
     let location = useLocation();
 
+
+
     const handleLogOut = () => {
         localStorage.removeItem("token");
         props.showAlert("User logged out successfully", "success")
     }
 
-    // TODO: to change it later
-    const localStorageTemp = true;
+
+
 
     return (
         <>
@@ -39,12 +41,12 @@ const Navbar = props => {
                     </div>
                     <div className="collapse navbar-collapse" id="navbarNav" style={{ "position": "absolute", "right": "1rem" }}>
                         {/* login and sign up button */}
-                        <Link className={`btn btn-primary mx-1 ${location.pathname === "/login" ? "d-none" : ""} ${localStorageTemp === false ? "d-none" : ""}`} to={"/login"} role="button">Login</Link>
+                        <Link className={`btn btn-primary mx-1 ${location.pathname === "/login" ? "d-none" : ""} ${localStorage.getItem('token') ? "d-none" : ""}`} to={"/login"} role="button">Login</Link>
 
-                        <Link className={`btn btn-primary mx-1 ${location.pathname === "/signup" ? "d-none" : ""} ${localStorageTemp === false ? "d-none" : ""}`} to={"/signup"} role="button">Sign Up</Link>
+                        <Link className={`btn btn-primary mx-1 ${location.pathname === "/signup" ? "d-none" : ""} ${localStorage.getItem('token') ? "d-none" : ""}`} to={"/signup"} role="button">Sign Up</Link>
 
                         {/* logout button */}
-                        <Link className={`btn btn-primary mx-1 ${localStorageTemp === false ? "" : "d-none"}`} to={"/login"} onClick={handleLogOut} role="button">LogOut</Link>
+                        <Link className={`btn btn-primary mx-1 ${localStorage.getItem('token') ? "" : "d-none"}`} to={"/login"} onClick={handleLogOut} role="button">LogOut</Link>
                     </div>
                 </div>
             </nav>

@@ -85,13 +85,13 @@ router.post("/createaccount", [
 // ^ ROUTE 2: User log in 
 
 router.post('/login', [
-    body('username', "Username must contain at least 5 characters").isLength({ min: 5 }),
+    body('email', "Email must contain at least 5 characters").isLength({ min: 5 }),
     body('password', "Password must contain at least 8 characters").isLength({ min: 8 })
 ], async (req, res) => {
     // check for any type of error that occurred the input 
     const errors = validationResult(req);
 
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
         return res.status(400).json({ "error": errors.array()[0].msg, "success": "false" });
     }
 
@@ -99,7 +99,7 @@ router.post('/login', [
         try {
             let user = await User.findOne({ "Email": req.body.email });
             if (!user) {
-                return res.status(404).json({ "error": `No email found with the following email.\nEmail: ${req.body.email}`, "success": "false" })
+                return res.status(404).json({ "error": `No email found with the following email. Email: ` + req.body.email, "success": "false" })
             }
             else {
                 const comparePassword = await bcrypt.compare(req.body.password, user.Password)
