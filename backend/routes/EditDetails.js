@@ -4,6 +4,15 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs');
 const fetchDetails = require('../middleware/fetchDetails');
+const jwt = require("jsonwebtoken")
+
+
+// for using the .env secrets
+require('dotenv').config()
+
+// bring the JWT_secret
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // ^ ROUTE 1: Edit user details:
@@ -96,7 +105,7 @@ router.put('/changepassword', fetchDetails, [
     const loggedInUserId = req.user.id;
 
     try {
-        let user = await User.findOne({ _id: loggedInUserId })
+        let user = await User.findOne({ "_id": loggedInUserId })
         const comparePassword = await bcrypt.compare(req.body.oldPassword, user.Password);
 
         if (!comparePassword) {
@@ -111,7 +120,19 @@ router.put('/changepassword', fetchDetails, [
             await User.findOneAndUpdate({ _id: loggedInUserId }, {
                 Password: securePassword
             })
-            return res.status(200).json({ "message": "Password Updated Successfully!", "success": "true" })
+
+
+
+            // giving out the auth token for successful login
+            const data = {
+                user: {
+                    id: user.id
+                }
+            }
+
+            // giving out the auth token
+            const authToken = jwt.sign(data, JWT_SECRET);
+            return res.status(200).json({ "message": "Password Updated Successfully!", "success": "true", authToken })
         }
 
     } catch (error) {

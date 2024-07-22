@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = (props) => {
-
+    const navigate = useNavigate()
     // for editing purpose in the update details
     const [editedUserData, setEditedUserData] = useState({ "user": { "Name": "", "Email": "", "Username": "", "MobileNumber": "" } })
 
     // for updating the details - in the update details menu
     const onChange = (e) => {
-        console.log(e)
-        console.log(editedUserData)
         setEditedUserData({
             ...editedUserData,
             "user": {
@@ -31,7 +30,7 @@ const Dashboard = (props) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "auth-token":localStorage.getItem('token')
+                    "auth-token": localStorage.getItem('token')
                 },
                 body: JSON.stringify({ name: editedUserData.user.Name, email: editedUserData.user.Email, password: editedUserData.user.Password, username: editedUserData.user.Username, mobilenumber: editedUserData.user.MobileNumber })
             }
@@ -53,14 +52,67 @@ const Dashboard = (props) => {
     const editDetailsCloseRef = useRef();
     const ChangePasswordRef = useRef();
 
-
-
-
     // incase user change details in the edit menu but closes the window,
     // this will help to set those details back to the original data
     const formatEditedDetails = () => {
         setEditedUserData(userData);
     }
+
+    // for the password
+    const [password, setPassword] = useState({ oldPassword: "", newPassword: "", confirmPassword: "" })
+    const onChangePassword = (e) => {
+        setPassword({ ...password, [e.target.name]: e.target.value })
+    }
+
+    const formatPasswordFields = () => {
+        setPassword({ oldPassword: "", newPassword: "", confirmPassword: "" })
+    }
+
+    const updatePassword = async (e) => {
+        e.preventDefault();
+        ChangePasswordRef.current.click()
+
+        // what if new password not equals to the confirmed password
+        if (password.newPassword !== password.confirmPassword) {
+            return props.showAlert("Password mismatched!", "danger")
+        }
+
+        try {
+            var response = await fetch(`http://localhost:5000/api/edit/changepassword`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "auth-token": localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({ "oldPassword": password.oldPassword, "password": password.newPassword })
+                }
+            );
+        } catch (error) {
+            return props.showAlert(error, "danger");
+        }
+
+
+        const json = await response.json();
+
+        if (json.success === "false") {
+            if (json.error === "Invalid Credentials") {
+                localStorage.removeItem('token');
+                navigate('/login')
+                return props.showAlert("Unauthorized Access Detected! LogIn again to continue", "danger")
+
+            }
+            return props.showAlert(json.error, "info");
+        }
+
+        else if (json.success === "true") {
+            // if password successful, update the authToken
+            localStorage.setItem('token', json.authToken);
+            return props.showAlert("Password updated successfully!", "success")
+        }
+
+    }
+
 
 
     useEffect(() => {
@@ -93,7 +145,6 @@ const Dashboard = (props) => {
                     setUserData(json); // Store the data in state
                     setEditedUserData(json); // Store for the fact if user update value
                     setDataRetrieved("true") // yes, data retrieved
-                    console.log(userData)
                 }
 
                 else {
@@ -108,6 +159,7 @@ const Dashboard = (props) => {
         };
 
         fetchData();
+        // eslint-disable-next-line
     }, []);
 
 
@@ -173,7 +225,7 @@ const Dashboard = (props) => {
                                     </button>
 
                                     {/* MODAL 2 -> Button <- Change Password*/}
-                                    <button type="button" className="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#changePassword">
+                                    <button onClick={formatPasswordFields} type="button" className="btn btn-success mx-1" data-bs-toggle="modal" data-bs-target="#changePassword">
                                         Change Password
                                     </button>
                                 </div>
@@ -218,7 +270,7 @@ const Dashboard = (props) => {
 
                         <div className="modal-footer">
                             <button ref={editDetailsCloseRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={updateDetails}>Update Details</button>
+                            <button type="button" className="btn btn-success" onClick={updateDetails}>Update Details</button>
                         </div>
                     </div>
                 </div>
@@ -237,15 +289,33 @@ const Dashboard = (props) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="changePasswordLabel">Modal title</h1>
+                            <h1 className="modal-title fs-5" id="changePasswordLabel">Change Password</h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            ...
+
+
+                            {/* form for editing details */}
+                            {/* old password */}
+                            <div className="my-2">
+                                <label htmlFor="oldPassword" className="form-label">Enter Old Password</label>
+                                <input type="password" name='oldPassword' value={password.oldPassword} onChange={onChangePassword} className="form-control" id="oldPassword" aria-describedby="oldPasswordHelp" />
+                            </div>
+                            <hr className="line" />
+
+                            {/* new password */}
+                            <div className="my-2">
+                                <label htmlFor="newPassword" className="form-label">New Password</label>
+                                <input type="password" name='newPassword' value={password.newPassword} onChange={onChangePassword} className="form-control" id="newPassword" aria-describedby="newPasswordHelp" />
+                            </div>
+                            <div className="my-2">
+                                <label htmlFor="confirmPassword" className="form-label my-2">Confirm Password</label>
+                                <input type="password" name='confirmPassword' value={password.confirmPassword} onChange={onChangePassword} className="form-control" id="confirmPassword" aria-describedby="confirmPasswordHelp" />
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button ref={ChangePasswordRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Update Password</button>
+                            <button onClick={updatePassword} type="button" className="btn btn-success">Update Password</button>
                         </div>
                     </div>
                 </div>
