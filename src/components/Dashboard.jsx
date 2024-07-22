@@ -22,6 +22,33 @@ const Dashboard = (props) => {
     const [userData, setUserData] = useState({ "user": { "Name": "", "Email": "", "Username": "", "MobileNumber": "" } })
     const [dataRetrieved, setDataRetrieved] = useState("false")
 
+    const updateDetails = async (e) => {
+        e.preventDefault();
+        editDetailsCloseRef.current.click()
+
+        const response = await fetch(`http://localhost:5000/api/edit/updatedetails`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token":localStorage.getItem('token')
+                },
+                body: JSON.stringify({ name: editedUserData.user.Name, email: editedUserData.user.Email, password: editedUserData.user.Password, username: editedUserData.user.Username, mobilenumber: editedUserData.user.MobileNumber })
+            }
+        );
+
+        const json = await response.json();
+
+        if (json.success === "false") {
+            return props.showAlert(json.error, "info");
+        }
+
+        else if (json.success === "true") {
+            setUserData(editedUserData);
+            return props.showAlert("Details updated successfully!", "success")
+        }
+    }
+
     // modal close button ref
     const editDetailsCloseRef = useRef();
     const ChangePasswordRef = useRef();
@@ -37,7 +64,7 @@ const Dashboard = (props) => {
 
 
     useEffect(() => {
-        const fetchData = async () => {
+        var fetchData = async () => {
             try {
                 var authToken = localStorage.getItem('token');
 
@@ -191,7 +218,7 @@ const Dashboard = (props) => {
 
                         <div className="modal-footer">
                             <button ref={editDetailsCloseRef} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Update Details</button>
+                            <button type="button" className="btn btn-primary" onClick={updateDetails}>Update Details</button>
                         </div>
                     </div>
                 </div>
