@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# shakalyatech-Internship-userAuthenticationSystem : An internship offered by Shakalyatech which helped me to develop skills by creating this single page web application with the help of React Js.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![sample Image](https://github.com/deepanshu-prajapati01/shakalyatech-Internship-userAuthenticationSystem/tree/master/images/1.png)
 
-## Available Scripts
+![sample Image](https://github.com/deepanshu-prajapati01/shakalyatech-Internship-userAuthenticationSystem/tree/master/images/3.png)
 
-In the project directory, you can run:
+# Things i have learnt throughout the project:: 
 
-### `npm start`
+* This project is one of my projects which is created with the help of React Js.
+* Enhanced Problem-Solving Skills
+* Gained Hands-On Experience 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# About this application
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* It is a basic user authentication system.
+* In this user, get a dashboard in which he can see their personal details.
+* User can edit their personal details, as well change password.
 
-### `npm test`
+# Some important things: 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Make sure to download [MongoDB](https://www.mongodb.com/) for backend database, for better knowledge of setup refer to [this video...](https://www.youtube.com/watch?v=jWIeK3ueOm8&list=PLu0W_9lII9agx66oZnT6IyhcMIbUMNMdt&index=43&pp=iAQB)
+* In this project the `backend` folder is inside the main folder.
+* Both `backend` and `frontend` have their separate dependencies which to be installed separately
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# How to use this script:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Step 1: Clone this repo using the following command.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```shell
+git clone https://github.com/deepanshu-prajapati01/shakalyatech-Internship-userAuthenticationSystem
+```
 
-### `npm run eject`
+* Step 2: Navigate to the cloned folder using the following command.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```shell
+cd shakalyatech-Internship-userAuthenticationSystem
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* Step 3: Install all the required dependencies for the frontend and backend using the following command.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```shell
+npm i
+cd ./backend
+npm i
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+* Step 4: Before running the backend make sure to change your `mongoURI` from the backend file `db.js`. Later, use this shell to run backend:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```shell
+nodemon ./index.js
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Step 5: Open one more `Shell` in the `main` directory and run the following command (for the frontend): 
 
-### Code Splitting
+```shell
+npm run start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# That's it! You are ready to go! 
