@@ -12,14 +12,11 @@ import Alert from "./components/Alert";
 import Dashboard from "./components/Dashboard";
 import Signup from "./components/creds/Signup";
 import Login from "./components/creds/Login";
-import EditDetails from "./components/creds/EditDetails";
-import ChangePassword from "./components/creds/ChangePassword";
 
 
 
 
 function App() {
-
   const [alert, setAlert] = useState({
     "opacity": 0,
     "alertText": "‎",
@@ -68,37 +65,24 @@ function App() {
 
           <Route exact path="/dashboard" element={
             <>
-              <Dashboard showAlert={showAlert}  />
+              <Dashboard showAlert={showAlert} />
             </>
           } />
 
 
           <Route exact path="/signup" element={
             <>
-              <Signup showAlert={showAlert}  />
+              <Signup showAlert={showAlert}/>
             </>
           } />
 
 
           <Route exact path="/login" element={
             <>
-              <Login showAlert={showAlert}  />
+              <Login showAlert={showAlert} />
             </>
           } />
 
-
-          <Route exact path="/editaccount" element={
-            <>
-              <EditDetails showAlert={showAlert}  />
-            </>
-          } />
-
-
-          <Route exact path="/changepassword" element={
-            <>
-              <ChangePassword showAlert={showAlert}  />
-            </>
-          } />
 
 
 
